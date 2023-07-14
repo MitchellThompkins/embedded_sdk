@@ -1,0 +1,25 @@
+name: embedded_sdk_docker
+
+on:
+  push:
+  pull_request:
+    branches:
+        - develop
+
+jobs:
+    build_and_publish_container:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: Login to GitHub Container Registry
+              uses: docker/login-action@v1
+              with:
+                  registry: ghcr.io
+                  username: ${{ github.actor }}
+                  password: ${{ secrets.GITHUB_TOKEN }}
+                  context: .
+            - name: Build and publish docker image
+              run: |
+                    docker build . --file Dockerfile --tag ghcr.io/mitchellthompkins/embedded_sdk:latest
+                    docker run ghcr.io/mitchellthompkins/embedded_sdk:latest
+                    docker push ghcr.io/mitchellthompkins/embedded_sdk:latest
