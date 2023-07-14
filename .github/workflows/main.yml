@@ -4,7 +4,7 @@ on:
   push:
   pull_request:
     branches:
-        - develop
+        - main
 
 jobs:
     build_and_publish_container:
