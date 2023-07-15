@@ -8,7 +8,7 @@ container.pull.remote:
 
 .PHONY: container.start.%
 container.start.%:
-	docker-compose -f docker-compose.yml run --rm $* 'sh -x'
+	docker-compose -f docker-compose.yaml run --rm $* 'sh -x'
 
 .PHONY: foo
 foo:
