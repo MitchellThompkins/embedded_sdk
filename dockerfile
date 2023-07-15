@@ -43,11 +43,11 @@ ARG qemu_version="8.0.2"
 ARG qemu_release="qemu-${qemu_version}"
 ARG qemu_url="https://download.qemu.org/${qemu_release}.tar.xz"
 
-ARG qemu_soft_mmu="aarch64-softmmu,arm-softmmu,avr-softmmu"
+ARG targets="aarch64-softmmu,arm-softmmu,avr-softmmu,aarch64-linux-user,arm-linux-user,armeb-linux-user"
 
 RUN wget -O qemu.tar.xz ${qemu_url} \
     && tar -xvf qemu.tar.xz \
-    && cd ${qemu_release} && mkdir build && cd build && ../configure --target-list=${qemu_soft_mmu} && make -j$(nproc) && make install && cd ../ \
+    && cd ${qemu_release} && mkdir build && cd build && ../configure --target-list=${targets} && make -j$(nproc) && make install && cd ../ \
     && rm -rf qemu.tar.xz \
     && rm -rf ${qemu_release}
 

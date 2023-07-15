@@ -9,9 +9,3 @@ container.pull.remote:
 .PHONY: container.start.%
 container.start.%:
 	docker-compose -f docker-compose.yaml run --rm $* 'sh -x'
-
-.PHONY: foo
-foo:
-	wget -O qemu.tar.xz ${qemu_url} \
-    && tar -xvf qemu.tar.xz \
-    && cd ${qemu_release} && mkdir build && cd build && ../configure --target-list=${qemu_soft_mmu} && make -j$(nproc) && make install && cd ../ \
