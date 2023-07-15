@@ -13,7 +13,7 @@ Notably it:
 
 # Usage
 
-There is a 'docker-compose.yaml' and `entrypoint.sh` which can be used to open
+There is a `docker-compose.yaml` and `entrypoint.sh` which can be used to open
 up a container instance with:
 * `make container.start.remote` for a container pulled with `make container.pull.remote`
 * `make container.start.local` for a locally built container
