@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+    remote:
+        image: ghcr.io/mitchellthompkins/embedded_sdk:latest
+        environment:
+            - USER=${USER}
+            - Display=${DISPLAY}
+            - MY_UID=${MY_UID:? Error -> need UID.}
+            - MY_GID=${MY_GID:? Error -> need GID.}
+        volumes:
+            - "${PWD}:${PWD}"
+        network_mode: host
+        tty: True
+        working_dir: ${PWD}
+        entrypoint: ${PWD}/entrypoint.sh
+        command: /bin/bash
+
+    local:
+        image: embedded_sdk:latest
+        environment:
+            - USER=${USER}
+            - Display=${DISPLAY}
+            - MY_UID=${MY_UID:? Error -> need UID.}
+            - MY_GID=${MY_GID:? Error -> need GID.}
+        volumes:
+            - "${PWD}:${PWD}"
+        network_mode: host
+        tty: True
+        working_dir: ${PWD}
+        entrypoint: ${PWD}/entrypoint.sh
+        command: /bin/bash
