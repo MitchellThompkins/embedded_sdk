@@ -9,6 +9,7 @@ RUN dnf install --enablerepo=powertools  -y\
     autoconf\
     libtool\
     gcc\
+    clang\
     libncurses*\
     bzip2\
     glib2-devel\
@@ -44,12 +45,12 @@ RUN wget -O cmake.tar.gz ${cmake_url} \
 ############################
 # Install arm toolchain ####
 ############################
-ARG arm_toolchain_url="https://developer.arm.com/-/media/Files/downloads/gnu-rm/6_1-2017q1/gcc-arm-none-eabi-6-2017-q1-update-linux.tar.bz2?rev=6799a2bcea254e118a363f4bce1c06f7&revision=6799a2bc-ea25-4e11-8a36-3f4bce1c06f7?product=Downloads,64-bit,,Linux,6-2017-q1-update"
+ARG arm_toolchain="arm-gnu-toolchain-12.2.rel1-x86_64-arm-none-eabi"
+ARG arm_toolchain_url="https://developer.arm.com/-/media/Files/downloads/gnu/12.2.rel1/binrel/${arm_toolchain}.tar.xz?rev=7bd049b7a3034e64885fa1a71c12f91d&hash=2C60D7D4E432953DB65C4AA2E7129304F9CD05BF"
 
 RUN wget -O arm_none_eabi.tar.xz ${arm_toolchain_url} \
     && tar -xvf arm_none_eabi.tar.xz -C /opt/ \
     && rm -rf arm_toolchain.tar.xz
-
 
 ############################
 # Install qemu #############
@@ -71,3 +72,12 @@ RUN wget -O qemu.tar.xz ${qemu_url} \
 # Set path #################
 ############################
 ENV PATH="${PATH}:/opt/${arm_toolchain}/bin:/opt/${cmake_release}/bin"
+
+RUN arm-none-eabi-gcc --version &&\
+    arm-none-eabi-g++ --version &&\
+    gcc --version &&\
+    clang --version &&\
+    cmake --version &&\
+    qemu-system-arm --version &&\
+    python2.7 --version &&\
+    python3 --version
