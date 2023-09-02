@@ -67,6 +67,10 @@ RUN wget -O qemu.tar.xz ${qemu_url} \
     && rm -rf qemu.tar.xz \
     && rm -rf ${qemu_release}
 
+############################
+# Python ###################
+############################
+RUN python3 -m pip install -r requirements.txt
 
 ############################
 # Set path #################
