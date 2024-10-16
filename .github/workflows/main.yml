@@ -24,4 +24,4 @@ jobs:
 
             - name: Publish docker image
               run: |
-					make container.publish.amd64
+                    make container.publish.amd64
