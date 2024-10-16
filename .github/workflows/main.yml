@@ -20,6 +20,6 @@ jobs:
                   context: .
             - name: Build and publish docker image
               run: |
-                    docker build . --file dockerfile --build-arg platform=x86_64 --tag ghcr.io/mitchellthompkins/embedded_sdk-x86_64:latest
-                    docker run ghcr.io/mitchellthompkins/embedded_sdk:latest
-                    docker push ghcr.io/mitchellthompkins/embedded_sdk:latest
+                    docker build . --file Dockerfile --build-arg platform=x86_64 --tag ghcr.io/mitchellthompkins/embedded_sdk-x86_64:latest
+                    docker run ghcr.io/mitchellthompkins/embedded_sdk-x86_64:latest
+                    docker push ghcr.io/mitchellthompkins/embedded_sdk-x86_64:latest

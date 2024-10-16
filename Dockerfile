@@ -3,8 +3,6 @@ FROM arm64v8/rockylinux:8
 
 ARG platform
 ENV PLATFORM=${platform}
-RUN echo $PLATFORM
-RUN echo $platform
 
 # Install necessary packages
 RUN dnf install --enablerepo=powertools  -y\
