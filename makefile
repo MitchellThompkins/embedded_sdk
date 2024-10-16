@@ -5,9 +5,14 @@ container.build.%:
 		--platform=linux/$* \
 		--tag embedded_sdk-$* .
 
-.PHONY: container.pull.remote
-container.pull.remote:
-	docker pull ghcr.io/mitchellthompkins/embedded_sdk:latest
+.PHONY: container.publish.%
+container.publish.%:
+	docker run ghcr.io/mitchellthompkins/embedded_sdk-$*:latest
+	docker push ghcr.io/mitchellthompkins/embedded_sdk-$*:latest
+
+.PHONY: container.pull.%
+container.pull.%:
+	docker pull ghcr.io/mitchellthompkins/embedded_sdk-$*:latest
 
 .PHONY: container.start.%
 container.start.%:
