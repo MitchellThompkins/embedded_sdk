@@ -7,7 +7,14 @@ on:
         - main
 
 jobs:
-    build_and_publish_container:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v2
+            - name: Build image
+              run: |
+                    make container.build.amd64
+    publish:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
@@ -18,8 +25,7 @@ jobs:
                   username: ${{ github.actor }}
                   password: ${{ secrets.GITHUB_TOKEN }}
                   context: .
-            - name: Build and publish docker image
+            - name: Publish docker image
               run: |
-                    make container.build.amd64
                     docker run ghcr.io/mitchellthompkins/embedded_sdk:latest
                     docker push ghcr.io/mitchellthompkins/embedded_sdk:latest
