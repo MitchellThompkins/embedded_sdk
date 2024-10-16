@@ -21,6 +21,7 @@ jobs:
             - name: Build docker image
               run: |
                     make container.build.amd64
+
             - name: Publish docker image
               run: |
 					make container.publish.amd64
