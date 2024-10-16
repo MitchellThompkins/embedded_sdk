@@ -1,6 +1,9 @@
 .PHONY: container.build.%
 container.build.%:
-	docker build --file Dockerfile --build-arg platform=$* --tag embedded_sdk-$* .
+	docker build --file Dockerfile \
+		--build-arg platform=$* \
+		--platform=linux/$* \
+		--tag embedded_sdk-$* .
 
 .PHONY: container.pull.remote
 container.pull.remote:

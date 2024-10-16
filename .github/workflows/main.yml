@@ -20,6 +20,6 @@ jobs:
                   context: .
             - name: Build and publish docker image
               run: |
-                    make container.build
-                    docker run ghcr.io/mitchellthompkins/embedded_sdk-x86_64:latest
-                    docker push ghcr.io/mitchellthompkins/embedded_sdk-x86_64:latest
+                    make container.build.amd64
+                    docker run ghcr.io/mitchellthompkins/embedded_sdk-amd64:latest
+                    docker push ghcr.io/mitchellthompkins/embedded_sdk-amd64:latest

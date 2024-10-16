@@ -1,8 +1,15 @@
-#FROM rockylinux:8
-FROM arm64v8/rockylinux:8
-
 ARG platform
-ENV PLATFORM=${platform}
+
+FROM rockylinux:8 AS base
+
+FROM base AS base-amd64
+ENV PLATFORM=x86_64
+
+FROM base AS base-arm64
+ENV PLATFORM=aarch64
+
+FROM base-${platform} AS final
+RUN echo "PLATFORM is ${PLATFORM}"
 
 # Install necessary packages
 RUN dnf install --enablerepo=powertools  -y\
