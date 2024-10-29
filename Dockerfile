@@ -1,7 +1,18 @@
-FROM rockylinux:8
+ARG platform
+
+FROM rockylinux:9 AS base
+
+FROM base AS base-amd64
+ENV PLATFORM=x86_64
+
+FROM base AS base-arm64
+ENV PLATFORM=aarch64
+
+FROM base-${platform} AS final
+RUN echo "PLATFORM is ${PLATFORM}"
 
 # Install necessary packages
-RUN dnf install --enablerepo=powertools  -y\
+RUN dnf install --enablerepo=crb -y\
     ninja-build\
     clang\
     make\
@@ -19,7 +30,6 @@ RUN dnf install --enablerepo=powertools  -y\
     pixman-devel\
     bison\
     python39\
-    python27\
     gdb\
     wget\
     which\
@@ -34,7 +44,7 @@ WORKDIR /opt/
 ############################
 # From compiled release b/c the rocky linux repo resolves to version 3.20
 ARG cmake_version="3.27.0-rc4"
-ARG cmake_release="cmake-${cmake_version}-linux-x86_64"
+ARG cmake_release="cmake-${cmake_version}-linux-$PLATFORM"
 ARG cmake_url="https://github.com/Kitware/CMake/releases/download/v${cmake_version}/${cmake_release}.tar.gz"
 
 RUN wget -O cmake.tar.gz ${cmake_url} \
@@ -45,7 +55,7 @@ RUN wget -O cmake.tar.gz ${cmake_url} \
 ############################
 # Install arm toolchain ####
 ############################
-ARG arm_toolchain="arm-gnu-toolchain-12.2.rel1-x86_64-arm-none-eabi"
+ARG arm_toolchain="arm-gnu-toolchain-12.2.rel1-$PLATFORM-arm-none-eabi"
 ARG arm_toolchain_url="https://developer.arm.com/-/media/Files/downloads/gnu/12.2.rel1/binrel/${arm_toolchain}.tar.xz?rev=7bd049b7a3034e64885fa1a71c12f91d&hash=2C60D7D4E432953DB65C4AA2E7129304F9CD05BF"
 
 RUN wget -O arm_none_eabi.tar.xz ${arm_toolchain_url} \
@@ -67,7 +77,6 @@ RUN wget -O qemu.tar.xz ${qemu_url} \
     && rm -rf qemu.tar.xz \
     && rm -rf ${qemu_release}
 
-
 ############################
 # Set path #################
 ############################
@@ -79,5 +88,4 @@ RUN arm-none-eabi-gcc --version &&\
     clang --version &&\
     cmake --version &&\
     qemu-system-arm --version &&\
-    python2.7 --version &&\
     python3 --version

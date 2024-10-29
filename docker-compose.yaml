@@ -1,32 +1,18 @@
-version: '3'
-
 services:
     remote:
         image: ghcr.io/mitchellthompkins/embedded_sdk:latest
-        environment:
-            - USER=${USER}
-            - Display=${DISPLAY}
-            - MY_UID=${MY_UID:? Error -> need UID.}
-            - MY_GID=${MY_GID:? Error -> need GID.}
-        volumes:
-            - "${PWD}:${PWD}"
-        network_mode: host
-        tty: True
-        working_dir: ${PWD}
-        entrypoint: ${PWD}/entrypoint.sh
-        command: /bin/bash
+        extends:
+          file: docker-compose-base.yaml
+          service: base
 
-    local:
-        image: embedded_sdk:latest
-        environment:
-            - USER=${USER}
-            - Display=${DISPLAY}
-            - MY_UID=${MY_UID:? Error -> need UID.}
-            - MY_GID=${MY_GID:? Error -> need GID.}
-        volumes:
-            - "${PWD}:${PWD}"
-        network_mode: host
-        tty: True
-        working_dir: ${PWD}
-        entrypoint: ${PWD}/entrypoint.sh
-        command: /bin/bash
+    local-amd64:
+        image: embedded_sdk-amd64:latest
+        extends:
+          file: docker-compose-base.yaml
+          service: base
+
+    local-arm64:
+        image: embedded_sdk-arm64:latest
+        extends:
+          file: docker-compose-base.yaml
+          service: base
