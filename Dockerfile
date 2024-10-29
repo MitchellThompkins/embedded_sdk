@@ -1,6 +1,6 @@
 ARG platform
 
-FROM rockylinux:8 AS base
+FROM rockylinux:9 AS base
 
 FROM base AS base-amd64
 ENV PLATFORM=x86_64
@@ -12,7 +12,7 @@ FROM base-${platform} AS final
 RUN echo "PLATFORM is ${PLATFORM}"
 
 # Install necessary packages
-RUN dnf install --enablerepo=powertools  -y\
+RUN dnf install --enablerepo=crb -y\
     ninja-build\
     clang\
     make\
@@ -30,12 +30,13 @@ RUN dnf install --enablerepo=powertools  -y\
     pixman-devel\
     bison\
     python39\
-    python27\
     gdb\
     wget\
     which\
     git\
     xz
+
+    #python27\
 
 WORKDIR /opt/
 
