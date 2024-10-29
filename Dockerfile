@@ -36,8 +36,6 @@ RUN dnf install --enablerepo=crb -y\
     git\
     xz
 
-    #python27\
-
 WORKDIR /opt/
 
 
@@ -79,7 +77,6 @@ RUN wget -O qemu.tar.xz ${qemu_url} \
     && rm -rf qemu.tar.xz \
     && rm -rf ${qemu_release}
 
-
 ############################
 # Set path #################
 ############################
@@ -91,5 +88,4 @@ RUN arm-none-eabi-gcc --version &&\
     clang --version &&\
     cmake --version &&\
     qemu-system-arm --version &&\
-    python2.7 --version &&\
     python3 --version
