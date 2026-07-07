@@ -1,5 +1,3 @@
-version: '3'
-
 services:
     remote:
         image: ghcr.io/mitchellthompkins/embedded_sdk:latest
