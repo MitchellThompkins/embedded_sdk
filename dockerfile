@@ -24,7 +24,8 @@ RUN dnf install -y epel-release && \
     git \
     xz \
     diffutils \
-    python3-tomli
+    python3-tomli \
+    python3-pip
 
 WORKDIR /opt/
 
@@ -82,6 +83,7 @@ RUN wget -O qemu.tar.xz ${qemu_url} \
 ############################
 # Python ###################
 ############################
+COPY requirements.txt .
 RUN python3 -m pip install -r requirements.txt
 
 ############################
