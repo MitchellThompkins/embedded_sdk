@@ -18,8 +18,10 @@ jobs:
                   username: ${{ github.actor }}
                   password: ${{ secrets.GITHUB_TOKEN }}
                   context: .
-            - name: Build and publish docker image
+            - name: Build docker image
               run: |
                     docker build . --file dockerfile --tag ghcr.io/mitchellthompkins/embedded_sdk:latest
                     docker run ghcr.io/mitchellthompkins/embedded_sdk:latest
-                    docker push ghcr.io/mitchellthompkins/embedded_sdk:latest
+            - name: Publish docker image
+              if: github.ref == 'refs/heads/main'
+              run: docker push ghcr.io/mitchellthompkins/embedded_sdk:latest
